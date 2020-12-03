@@ -5,6 +5,13 @@
  */
 package GUI;
 
+import MODEL.User;
+import bd.DAOLogin;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Esteban V
@@ -16,6 +23,7 @@ public class Login extends javax.swing.JFrame {
      */
     public Login() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -117,10 +125,29 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-       
-        String User = jtxt_user.getText();
-        String Pass = jtxtp_pass.getText();
         
+        try {
+                DAOLogin oLogin = new DAOLogin();
+                User oUser = new User();
+                oUser.setUser(jtxt_user.getText());
+                oUser.setPass(jtxtp_pass.getText());
+                
+            if (oLogin.Login(oUser) == true ) {
+                
+                CRUD oCRUD = new CRUD();
+                oCRUD.setVisible(true);
+                this.dispose();
+            }else{
+                
+                JOptionPane.showMessageDialog(null, "Error al iniciar sesión");
+            
+            }
+            
+        } catch (SQLException ex) {
+            
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
         
         
     }//GEN-LAST:event_btn_loginActionPerformed

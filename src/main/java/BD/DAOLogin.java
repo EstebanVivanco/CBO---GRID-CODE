@@ -1,6 +1,7 @@
 
 package bd;
 
+import MODEL.Cliente;
 import MODEL.User;
 import java.sql.SQLException;// import para manejar excepciones SQL
 
@@ -24,7 +25,19 @@ public class DAOLogin {
     }
 
  
-    
+     public  boolean Login(User oUser) throws SQLException{
+        
+       sql="SELECT * FROM LOGIN WHERE pass = '"+oUser.getPass()+"' and usuario = '"+oUser.getUser()+"'";
+       oConexion.ejecutarSelect(sql);
+       System.out.println(sql);     
+       
+         if (oConexion.rs.next()) {
+             return true;
+         }else{
+             return false;
+         }
+       
+  }
     
  
 }
